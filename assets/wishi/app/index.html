@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wishi: find something they've been wishing for</title>
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <meta name="description" content="Find something they've been wishing for. Describe the person and get gift ideas from several stores in one place.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a class="logo" href="#top" aria-label="Wishi home">
+    <img class="logo-mark" src="img/wishi-mascot.png" alt="" width="46" height="46">
+    <span class="logo-name" data-site-name>Wishi</span>
+  </a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="#how">How it works</a>
+    <button type="button" id="open-list" class="btn btn-ghost">
+      My gift list <span class="count-pill" id="list-count">0</span>
+    </button>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="ribbon ribbon-v" aria-hidden="true"></div>
+    <div class="ribbon ribbon-h" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <h1>Find something they've been wishing for.</h1>
+        <p class="lead">Stop opening ten tabs. Tell Wishi about the person and get picks from several stores in one place.</p>
+        <p class="hero-note">Prefer to browse? <a href="#results">Jump to all gift ideas</a>.</p>
+      </div>
+
+      <section class="chat-card" id="chat" aria-labelledby="chat-title">
+        <div class="chat-head">
+          <img class="chat-mascot" src="img/wishi-mascot.png" alt="" width="76" height="76">
+          <div>
+            <h2 id="chat-title">Who are you shopping for?</h2>
+            <p>Write it like you'd tell a friend. Age, interests, budget, what they'd hate.</p>
+          </div>
+        </div>
+
+        <div class="chat-log" id="chat-log" role="log" aria-live="polite" aria-label="Conversation with the gift assistant"></div>
+
+        <div class="starters" id="starters" aria-label="Example messages"></div>
+
+        <form class="chat-form" id="chat-form" autocomplete="off">
+          <label class="sr-only" for="chat-input">Describe the person you are buying for</label>
+          <textarea id="chat-input" rows="2" maxlength="600" placeholder="e.g. My dad turns 60, loves jazz, hates gadgets. About 80 euros."></textarea>
+          <button type="submit" class="btn btn-primary" id="chat-send">Find gifts</button>
+        </form>
+        <p class="fine">We may earn a commission when you buy through our links, at no extra cost to you.</p>
+      </section>
+    </div>
+  </section>
+
+  <div class="shared-banner" id="shared-banner" hidden>
+    <p><strong id="shared-count">0</strong> gift ideas were shared with you.</p>
+    <button type="button" class="btn btn-primary" id="shared-open">View the list</button>
+  </div>
+
+  <section class="results" id="results" aria-labelledby="results-title">
+    <div class="results-head">
+      <h2 id="results-title">Browse all gift ideas</h2>
+      <p>Pick who it's for, then narrow it down.</p>
+    </div>
+
+    <div class="who" id="recipient-chips" role="group" aria-label="Who is it for"></div>
+
+    <div class="layout">
+      <aside class="filters" id="filters" aria-label="Filters">
+        <div class="filters-top">
+          <h3>Filters</h3>
+          <button type="button" class="btn btn-ghost small" id="reset-filters">Reset filters</button>
+        </div>
+
+        <fieldset class="f-group">
+          <legend>Occasion</legend>
+          <div class="chips" id="occasion-chips"></div>
+        </fieldset>
+
+        <fieldset class="f-group">
+          <legend>Category</legend>
+          <div class="cats" id="category-list"></div>
+        </fieldset>
+
+        <fieldset class="f-group">
+          <legend>Interests</legend>
+          <div class="chips" id="interest-chips"></div>
+        </fieldset>
+
+        <fieldset class="f-group">
+          <legend>Budget</legend>
+          <div class="chips" id="budget-presets"></div>
+          <div class="range" id="budget-range">
+            <div class="range-track"><div class="range-fill" id="range-fill"></div></div>
+            <input type="range" id="budget-min" min="0" max="200" step="5" value="0" aria-label="Minimum price in euros">
+            <input type="range" id="budget-max" min="0" max="200" step="5" value="200" aria-label="Maximum price in euros">
+          </div>
+          <p class="range-label" id="budget-label" aria-live="polite"></p>
+        </fieldset>
+
+        <button type="button" class="btn btn-primary sheet-done" id="close-filters">Show results</button>
+      </aside>
+
+      <div class="catalog">
+        <div class="toolbar">
+          <button type="button" class="btn btn-outline filters-toggle" id="open-filters">
+            Filters <span class="count-pill" id="filter-count">0</span>
+          </button>
+          <p class="result-count" id="result-count" aria-live="polite"></p>
+          <label class="sort">
+            <span>Sort by</span>
+            <select id="sort">
+              <option value="recommended">Recommended</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="active-chips" id="active-chips" aria-label="Active filters"></div>
+
+        <div class="grid" id="grid"></div>
+
+        <div class="empty" id="empty" hidden>
+          <p class="empty-title">Nothing matches all of those filters.</p>
+          <p>Remove one of the active filters above, or reset everything and start again.</p>
+          <button type="button" class="btn btn-primary" id="empty-reset">Reset filters</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how" aria-labelledby="how-title">
+    <h2 id="how-title">How it works</h2>
+    <ol class="steps">
+      <li>
+        <span class="step-num" aria-hidden="true">1</span>
+        <h3>Tell us about the person</h3>
+        <p>Chat with the assistant or use the filters. Who it's for, the occasion, the budget, what they like.</p>
+      </li>
+      <li>
+        <span class="step-num" aria-hidden="true">2</span>
+        <h3>Browse smart picks</h3>
+        <p>We show products from different stores side by side, with a reason why each one fits.</p>
+      </li>
+      <li>
+        <span class="step-num" aria-hidden="true">3</span>
+        <h3>Buy at the store</h3>
+        <p>Click a product and you go straight to the store's own page. You pay them, not us.</p>
+      </li>
+    </ol>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p><strong data-site-name>Wishi</strong> is a demo project for a class on pitching.</p>
+  <p>Affiliate disclosure: we may earn a commission when you buy through links on this site, at no extra cost to you. We never sell products or take payments ourselves.</p>
+</footer>
+
+<div class="backdrop" id="backdrop" hidden></div>
+
+<aside class="drawer" id="list-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+  <div class="drawer-head">
+    <h2 id="drawer-title">My gift list</h2>
+    <button type="button" class="btn btn-ghost small" id="close-list" aria-label="Close gift list">Close</button>
+  </div>
+  <div class="drawer-body" id="list-body"></div>
+  <div class="drawer-foot" id="list-foot"></div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
