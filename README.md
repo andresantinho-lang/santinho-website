@@ -3,7 +3,7 @@
 Interactive portfolio of **André Santinho**, Strategic & Business Design
 (MSc Politecnico di Milano · BA Design IADE).
 
-Live site: https://santinho-site-1.vercel.app
+Live site: https://andresantinho.vercel.app
 
 ## Projects
 - **Wishi** — gift finder start-up: pitch, prototype, growth plan (MSc, 2026)
