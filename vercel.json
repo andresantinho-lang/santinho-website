@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "santinho-site-1.vercel.app" }],
+      "destination": "https://andresantinho.vercel.app/$1",
+      "permanent": true
+    }
+  ]
+}
