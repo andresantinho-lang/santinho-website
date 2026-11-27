@@ -482,7 +482,7 @@ figcaption{position:absolute;left:0;bottom:0;background:var(--bg);font-size:11px
 .pal button b{font-weight:700;font-size:22px;letter-spacing:-.02em}
 .pal button .cp{position:absolute;top:18px;left:20px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:0;transition:opacity .3s}
 .pal button:hover .cp{opacity:1}
-@media(max-width:720px){.pal{grid-template-columns:1fr;height:auto}.pal button{height:110px}}
+@media(max-width:720px){.pal,#auPal{grid-template-columns:1fr!important;height:auto!important}.pal button{height:110px}#auPal button{height:84px}}
 .tt-input{width:100%;border:0;border-bottom:1px solid var(--fg);background:none;font:inherit;font-size:16px;padding:10px 0;outline:none;margin-top:30px;color:var(--fg)}
 .tt-row{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--line)}
 .tt-row .smp{font-size:clamp(34px,5vw,72px);line-height:1.05;letter-spacing:-.01em;color:#2E7F2A;word-break:break-word}
@@ -1388,7 +1388,7 @@ figcaption{position:absolute;left:0;bottom:0;background:var(--bg);font-size:11px
       <div class="fc-tip" id="fcTip"></div>
       <div class="fc-leg"><span class="a">Revenue</span><span class="b">Net profit</span></div>
     </div>
-    <p class="v-cap" style="padding-left:0">Built with the IAPMEI FINICIA model. Hover a year for values.</p>
+    <p class="v-cap" style="padding-left:0">Built with the IAPMEI FINICIA model. Hover or tap a year for values.</p>
   </section>
 
   <section class="case" style="padding-top:0">
@@ -1559,7 +1559,7 @@ figcaption{position:absolute;left:0;bottom:0;background:var(--bg);font-size:11px
       </div>
       <div class="au-txt">
         <div class="big">Lettering<br>as a voice.</div>
-        <p style="margin-top:24px;max-width:38ch;font-size:15px">Move your mouse over the cover, and click to turn it over.</p>
+        <p style="margin-top:24px;max-width:38ch;font-size:15px">Click or tap the cover to turn it over.</p>
       </div>
     </div>
   </section>
@@ -1984,7 +1984,7 @@ if(statsEl)new IntersectionObserver((es,o)=>es.forEach(e=>{if(!e.isIntersecting)
     (function f(now){const p=Math.min(1,(now-t0)/1600),v=Math.round(n*(1-Math.pow(1-p,3)));el.textContent=v.toLocaleString('en-US');if(p<1)requestAnimationFrame(f)})(t0)})
 }),{threshold:.4}).observe(statsEl);
 /* calculator */
-const calcIn=$$('.calc input'), fmt=v=>'€'+Math.round(v).toLocaleString('en-US');
+const calcIn=$$('.calc input[data-p]'), fmt=v=>'€'+Math.round(v).toLocaleString('en-US');
 function calc(){let m=0,c=0;calcIn.forEach(i=>{i.nextElementSibling.textContent=i.value;m+=i.value*i.dataset.p;c+=+i.value});
   const y=m*12, max=200000;$('#arr').textContent=fmt(y);$('#mrr').textContent=`${fmt(m)} per month · ${c} clients`;
   $('#arrBar').style.width=Math.min(100,y/max*100)+'%';$('#tgt').style.left=(63400/max*100)+'%'}
